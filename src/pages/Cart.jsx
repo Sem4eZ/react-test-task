@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeItemFromCart, clearCart } from "../redux/slices/cartSlice";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,15 @@ const Cart = () => {
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold text-center mb-4">Ваша корзина</h2>
       {cartItems.length === 0 ? (
-        <p className="text-center text-gray-500">Ваша корзина пуста.</p>
+        <div className="flex justify-center items-center flex-col gap-5">
+          <p className="text-center text-gray-500">Ваша корзина пуста.</p>
+          <Link
+            to={"/"}
+            className="py-2 px-4 bg-indigo-200 rounded-lg hover:bg-indigo-300 border-2 border-indigo-300"
+          >
+            Вернуться на главную
+          </Link>
+        </div>
       ) : (
         <>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
