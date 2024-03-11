@@ -8,7 +8,7 @@ const Header = () => {
     <header>
       <div
         className="mx-auto flex 
-    max-h-[90px] items-center justify-center p-6 px-6 gap-x-6 bg-indigo-200 shadow-xl text-black text-xl"
+    max-h-[90px] items-center justify-center p-6 px-6 gap-x-6 bg-indigo-100 shadow-xl text-black text-xl"
       >
         <Link to={"/"}>Товары</Link>
         <Link to={"/cart"}>
