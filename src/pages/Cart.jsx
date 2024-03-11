@@ -6,13 +6,15 @@ const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
 
-  const handleRemoveItem = (color, size) => {
-    dispatch(removeItemFromCart({ color, size }));
+  const handleRemoveItem = (item) => {
+    const { color, size, id } = item;
+    dispatch(removeItemFromCart({ color, size, id }));
   };
 
   const handleClearCart = () => {
     dispatch(clearCart());
   };
+  console.log(cartItems);
 
   return (
     <div className="container mx-auto p-4">
@@ -29,7 +31,7 @@ const Cart = () => {
               >
                 <button
                   className="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-3xl"
-                  onClick={() => handleRemoveItem(item.color, item.size)}
+                  onClick={() => handleRemoveItem(item)}
                 >
                   &#10005;
                 </button>

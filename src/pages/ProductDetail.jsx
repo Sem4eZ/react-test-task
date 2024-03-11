@@ -96,9 +96,12 @@ const ProductDetail = () => {
         (color) => color.id === selectedColor
       );
       const selectedImage = selectedColorObj.images[0];
+      const uniqueItemId = `${
+        product.id
+      }-${selectedColor}-${selectedSize}-${Date.now()}`;
       dispatch(
         addItemToCart({
-          id: product.id,
+          id: uniqueItemId,
           name: product.name,
           color: selectedColorObj.name,
           size: selectedSize,
@@ -167,7 +170,7 @@ const ProductDetail = () => {
                     key={index}
                     className={`w-32 h-auto ${
                       index !== currentImageIndex ? "hidden" : ""
-                    }`} 
+                    }`}
                     src={image}
                     alt={`Product ${index}`}
                   />
