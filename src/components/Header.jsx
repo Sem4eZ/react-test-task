@@ -10,7 +10,6 @@ const Header = () => {
       >
         <Link to={"/"}>Товары</Link>
         <Link to={"/cart"}>Корзина</Link>
-        <div>Что-то еще</div>
       </div>
     </header>
   );

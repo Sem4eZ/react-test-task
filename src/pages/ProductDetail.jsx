@@ -13,6 +13,7 @@ const ProductDetail = () => {
   const [sizeLabels, setSizeLabels] = useState([]);
   const [selectedPrice, setSelectedPrice] = useState(null);
   const [selectedDescription, setSelectedDescription] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     getProduct(parseInt(id))
@@ -67,6 +68,7 @@ const ProductDetail = () => {
     setSelectedSize(
       product.colors.find((color) => color.id === colorId).sizes[0]
     );
+    setCurrentImageIndex(0);
   };
 
   const handleSizeChange = (sizeId) => {
@@ -78,11 +80,8 @@ const ProductDetail = () => {
     const selectedColorObj = product.colors.find(
       (color) => color.id === colorId
     );
-    const selectedSizeObj = selectedColorObj.sizes.find(
-      (size) => size === sizeId
-    );
 
-    if (selectedColorObj && selectedSizeObj) {
+    if (selectedColorObj) {
       setSelectedPrice(selectedColorObj.price);
       setSelectedDescription(selectedColorObj.description);
     } else {
@@ -166,11 +165,31 @@ const ProductDetail = () => {
                 .images.map((image, index) => (
                   <img
                     key={index}
-                    className="w-32 h-auto"
+                    className={`w-32 h-auto ${
+                      index !== currentImageIndex ? "hidden" : ""
+                    }`} 
                     src={image}
                     alt={`Product ${index}`}
                   />
                 ))}
+            <div className="flex mt-4">
+              {selectedColor &&
+                product.colors
+                  .find((color) => color.id === selectedColor)
+                  .images.map((image, index) => (
+                    <button
+                      key={index}
+                      className={`w-8 h-8 mx-1 rounded-full focus:outline-none focus:shadow-outline ${
+                        index === currentImageIndex
+                          ? "bg-indigo-500"
+                          : "bg-gray-200"
+                      }`}
+                      onClick={() => setCurrentImageIndex(index)}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+            </div>
           </div>
           <div className="flex justify-center mb-3">
             <button

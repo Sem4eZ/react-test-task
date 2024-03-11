@@ -26,9 +26,8 @@ const ProductList = () => {
 
   const getSizeLabel = (sizeId) => {
     const size = sizes.find((size) => size.id === sizeId);
-    return size ? size.label : "Доступных размеров нет в наличии";
+    return size ? size.label : "";
   };
-
   return (
     <div className="container mx-auto">
       <h2 className="text-3xl font-semibold text-center my-8">
@@ -55,7 +54,6 @@ const ProductList = () => {
                       />
                     )}
                     <p className="text-gray-700 mb-2">Доступные размеры:</p>
-                    {color.sizes ? "" : <div>Размеров нет в наличии</div>}
                     <ul className="flex gap-2">
                       {color.sizes.map((sizeId) => (
                         <li key={sizeId} className="mb-2">
