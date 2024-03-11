@@ -1,6 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
-
+import ReactDOM from "react-dom/client"; // Используем react-dom/client
 import { Provider } from "react-redux";
 import App from "./App";
 import "./styles/index.css";
@@ -10,12 +9,11 @@ import { store } from "./redux/store";
 const rootView = document.getElementById("root");
 
 if (rootView) {
-  ReactDOM.render(
+  ReactDOM.createRoot(rootView).render(
     <BrowserRouter>
       <Provider store={store}>
         <App />
       </Provider>
-    </BrowserRouter>,
-    rootView
+    </BrowserRouter>
   );
 }
