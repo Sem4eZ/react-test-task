@@ -8,6 +8,8 @@ const ProductDetail = () => {
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
   const [sizeLabels, setSizeLabels] = useState([]);
+  const [selectedPrice, setSelectedPrice] = useState(null);
+  const [selectedDescription, setSelectedDescription] = useState(null);
 
   useEffect(() => {
     getProduct(parseInt(id))
@@ -24,6 +26,21 @@ const ProductDetail = () => {
   }, [id]);
 
   useEffect(() => {
+    if (product && selectedColor && selectedSize) {
+      const selectedColorObj = product.colors.find(
+        (color) => color.id === selectedColor
+      );
+
+      setSelectedPrice(selectedColorObj.price);
+      setSelectedDescription(selectedColorObj.description);
+    } else if (product) {
+      const defaultColor = product.colors[2];
+      setSelectedPrice(defaultColor.price);
+      setSelectedDescription(defaultColor.description);
+    }
+  }, [product, selectedColor, selectedSize]);
+
+  useEffect(() => {
     if (selectedColor && product) {
       const color = product.colors.find((color) => color.id === selectedColor);
       Promise.all(color.sizes.map((sizeId) => getSizeLabel(sizeId)))
@@ -38,7 +55,7 @@ const ProductDetail = () => {
       return `${size.label} (${size.number})`;
     } catch (error) {
       console.error("Ошибка загрузки размера:", error);
-      return ""; 
+      return "";
     }
   };
 
@@ -51,8 +68,25 @@ const ProductDetail = () => {
 
   const handleSizeChange = (sizeId) => {
     setSelectedSize(sizeId);
+    updatePrice(selectedColor, sizeId);
   };
-  console.log(product);
+
+  const updatePrice = (colorId, sizeId) => {
+    const selectedColorObj = product.colors.find(
+      (color) => color.id === colorId
+    );
+    const selectedSizeObj = selectedColorObj.sizes.find(
+      (size) => size === sizeId
+    );
+
+    if (selectedColorObj && selectedSizeObj) {
+      setSelectedPrice(selectedColorObj.price);
+      setSelectedDescription(selectedColorObj.description);
+    } else {
+      setSelectedPrice(null);
+      setSelectedDescription(null);
+    }
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -62,9 +96,9 @@ const ProductDetail = () => {
             {product.name}
           </div>
           <div className="px-6 py-4">
-            <p className="text-gray-700 text-base">Цена: {product.price}</p>
+            <p className="text-gray-700 text-base">Цена: {selectedPrice}</p>
             <p className="text-gray-700 text-base">
-              Описание: {product.description}
+              Описание: {selectedDescription}
             </p>
           </div>
           <div className="flex w-full pt-4 pb-2 px-3 ">
