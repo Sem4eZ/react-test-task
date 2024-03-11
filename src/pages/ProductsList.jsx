@@ -28,7 +28,6 @@ const ProductList = () => {
     const size = sizes.find((size) => size.id === sizeId);
     return size ? size.label : "Доступных размеров нет в наличии";
   };
-  console.log(products);
 
   return (
     <div className="container mx-auto">

@@ -5,11 +5,11 @@ const Header = () => {
   return (
     <header>
       <div
-        className="mx-auto flex max-w-[1590px]
-    max-h-[90px] items-center justify-center p-6 px-6 gap-x-6 bg-slate-400 text-white"
+        className="mx-auto flex 
+    max-h-[90px] items-center justify-center p-6 px-6 gap-x-6 bg-indigo-200 shadow-xl text-black text-xl"
       >
         <Link to={"/"}>Товары</Link>
-        <div>Корзина</div>
+        <Link to={"/cart"}>Корзина</Link>
         <div>Что-то еще</div>
       </div>
     </header>

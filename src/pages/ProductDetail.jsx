@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getProduct, getSize } from "../services/api";
+import { addItemToCart } from "../redux/slices/cartSlice";
+import { useDispatch } from "react-redux";
 
 const ProductDetail = () => {
+  const dispatch = useDispatch();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
@@ -88,6 +91,25 @@ const ProductDetail = () => {
     }
   };
 
+  const handleAddToCart = () => {
+    if (product && selectedColor && selectedSize) {
+      const selectedColorObj = product.colors.find(
+        (color) => color.id === selectedColor
+      );
+      const selectedImage = selectedColorObj.images[0];
+      dispatch(
+        addItemToCart({
+          id: product.id,
+          name: product.name,
+          color: selectedColorObj.name,
+          size: selectedSize,
+          price: selectedPrice,
+          img: selectedImage,
+        })
+      );
+    }
+  };
+
   return (
     <div className="container mx-auto p-4">
       {product && (
@@ -149,6 +171,14 @@ const ProductDetail = () => {
                     alt={`Product ${index}`}
                   />
                 ))}
+          </div>
+          <div className="flex justify-center mb-3">
+            <button
+              onClick={handleAddToCart}
+              className="flex justify-center w-11/12 border-2 py-3 bg-indigo-300 rounded-xl hover:bg-indigo-400"
+            >
+              Добавить в корзину
+            </button>
           </div>
         </div>
       )}
