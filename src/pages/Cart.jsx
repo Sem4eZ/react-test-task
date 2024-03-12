@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeItemFromCart, clearCart } from "../redux/slices/cartSlice";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.items);
+  let cartItems = useSelector((state) => state.cart.items);
 
   const handleRemoveItem = (item) => {
     const { color, size, id } = item;
@@ -15,7 +15,13 @@ const Cart = () => {
   const handleClearCart = () => {
     dispatch(clearCart());
   };
-  console.log(cartItems);
+
+  useEffect(() => {
+    const json = JSON.stringify(cartItems);
+    localStorage.setItem("cart", json);
+  }, [cartItems]);
+
+  cartItems = Array.from(cartItems);
 
   return (
     <div className="container mx-auto p-4">
